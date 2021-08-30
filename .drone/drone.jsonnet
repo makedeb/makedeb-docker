@@ -7,7 +7,7 @@ local buildImage(type) = {
     name: "build-and-publish",
     image: "docker",
     environment: {
-
+      proget_api_key: {from_secret: "proget_api_key"}
     },
     command: [
       "apk add --no-cache bash",
