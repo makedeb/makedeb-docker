@@ -1,0 +1,37 @@
+FROM {{image}}
+
+ARG aur_url
+ARG makedeb_package
+ARG makepkg_package
+
+# Upgrade system.
+RUN pacman -Syyu --noconfirm base-devel \
+                             git \
+                             sudo
+
+# Prepare system for building.
+RUN useradd user
+RUN mkdir -p /makedeb/build_dir/
+WORKDIR /makedeb/build_dir/
+
+RUN git clone "https://${aur_url}/${makepkg_package}.git"
+RUN git clone "https://${aur_url}/${makedeb_package}.git"
+
+RUN chown user "${makedeb_package}/" "${makepkg_package}/" -R
+
+# Build packages.
+WORKDIR "/makedeb/build_dir/${makepkg_package}/"
+RUN sudo -u user -- makepkg -dm
+
+WORKDIR "/makedeb/build_dir/${makedeb_package}/"
+RUN sudo -u user -- makepkg -dm
+
+# Install packages
+WORKDIR /makedeb/build_dir/
+RUN pacman -U "./${makepkg_package}/${makepkg_package}"*.pkg.tar.* --asdeps --noconfirm
+RUN pacman -U "./${makedeb_package}/${makedeb_package}"*.pkg.tar.* --noconfirm
+
+# Cleanup our work.
+WORKDIR /
+RUN userdel user
+RUN rm -rf /makedeb/

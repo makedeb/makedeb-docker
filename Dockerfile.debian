@@ -1,0 +1,20 @@
+FROM {{image}}
+
+ARG proget_url
+ARG makedeb_package
+
+RUN DEBIAN_FRONTENT="noninteractive" \
+    apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get install wget gpg -y
+
+RUN wget -qO - "https://${proget_url}/debian-feeds/makedeb.pub" | \
+    gpg --dearmor | \
+    tee /usr/share/keyrings/makedeb-archive-keyring.gpg &> /dev/null
+
+RUN echo "deb [signed-by=/usr/share/keyrings/makedeb-archive-keyring.gpg arch=all] https://${proget_url}/ makedeb main" | \
+    tee /etc/apt/sources.list.d/makedeb.list
+
+RUN DEBIAN_FRONTEND="noninteractive" \
+  apt-get update && \
+  apt-get install "${makedeb_package}" -y
