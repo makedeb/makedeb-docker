@@ -37,6 +37,7 @@ sed "1s|{{image}}|${source_image}|" "./${target_dockerfile}"
 # Build and publish image.
 docker build --no-cache \
              -t "${target_tag}" \
-             "./${target_dockerfile}"
+             -f "./${target_dockerfile}" \
+             ./
 
 docker push "${target_tag}"
