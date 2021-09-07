@@ -38,6 +38,10 @@ sed -i "1s|{{image}}|${source_image}|" "./${target_dockerfile}"
 docker build --no-cache \
              -t "${target_tag}" \
              -f "./${target_dockerfile}" \
+             --build-arg "proget_url=${proget_server}" \
+             --build-arg "aur_url=${aur_url}" \
+             --build-arg "makedeb_package=${makedeb_package}" \
+             --build-arg "makepkg_package=${makepkg_package}" \
              ./
 
 docker push "${target_tag}"
