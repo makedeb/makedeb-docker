@@ -1,10 +1,10 @@
 local buildImage(source_image, target_tag, os_type) = {
-  name: "build-image",
+  name: "build-image-" + target_tag,
   kind: "pipeline",
   type: "docker",
   volumes: [{name: "docker", host: {path: "/var/run/docker.sock"}}],
   steps: [{
-    name: "build-and-publish",
+    name: "build-and-publish-" + target_tag,
     image: "docker",
     volumes: [{name: "docker", path: "/var/run/docker.sock"}],
     environment: {
