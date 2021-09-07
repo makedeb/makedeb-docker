@@ -15,14 +15,14 @@ configure_docker
 
 # Ensure tag was specified.
 case "${TAG}" in
-  stable)     makedeb_package="makedeb"; makepkg_package="makedeb-makepkg"; target_tag="${proget_server}/docker/makedeb/makedeb:${target_tag}";;
-  beta|alpha) makedeb_package="makedeb-${TAG}"; makepkg_package="makedeb-makepkg-${TAG}"; target_tag="${proget_server}/docker/makedeb/makedeb:${target_tag}-${TAG}" ;;
+  stable)     makedeb_package="makedeb"; makepkg_package="makedeb-makepkg" ;;
+  beta|alpha) makedeb_package="makedeb-${TAG}"; makepkg_package="makedeb-makepkg-${TAG}" ;;
   "")         echo "[Error] No tag was specified."; exit 1 ;;
   *)          echo "[Error] Invalid tag '${TAG}'."; exit 1 ;;
 esac
 
 # Setup image.
-echo "[Info] Building 'makedeb/makedeb:${target_tag}' from '${source_image}'..."
+echo "[Info] Building 'makedeb/${makedeb_package}:${target_tag}' from '${source_image}'..."
 
 if [[ "${os_type}" == "debian" ]]; then
   target_dockerfile="Dockerfile.debian"
@@ -34,9 +34,11 @@ fi
 
 sed -i "1s|{{image}}|${source_image}|" "./${target_dockerfile}"
 
+published_image_path="${proget_server}/docker/makedeb/${makedeb_package}:${target_tag}"
+
 # Build and publish image.
 docker build --no-cache \
-             -t "${target_tag}" \
+             -t "${published_image_path}" \
              -f "./${target_dockerfile}" \
              --build-arg "proget_url=${proget_server}" \
              --build-arg "aur_url=${aur_url}" \
@@ -44,4 +46,4 @@ docker build --no-cache \
              --build-arg "makepkg_package=${makepkg_package}" \
              ./
 
-docker push "${target_tag}"
+docker push "${published_image_path}"
