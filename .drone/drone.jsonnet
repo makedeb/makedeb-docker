@@ -3,9 +3,11 @@ local buildImage(type) = {
   kind: "pipeline",
   type: "docker",
   trigger: {event: type},
+  volumes: [{name: "docker", host: {path: "/var/run/docker.sock"}}],
   steps: [{
     name: "build-and-publish-" + type,
     image: "docker",
+    volumes: [{name: "docker", path: "/var/run/docker.sock"}],
     environment: {
       proget_api_key: {from_secret: "proget_api_key"},
       TAG: "stable"
