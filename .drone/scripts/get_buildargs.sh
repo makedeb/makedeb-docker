@@ -18,6 +18,6 @@ get_buildargs() {
 
   # Define tags
   for i in "${docker_build_tags[@]}"; do
-    docker_build_arguments+=("-t" "${proget_url}/makedeb/makedeb:${TAG}-${i}")
+    docker_build_arguments+=("-t" "${proget_url}/docker/makedeb/makedeb:${TAG}-${i}")
   done
 }
