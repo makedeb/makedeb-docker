@@ -9,7 +9,7 @@ local buildImage(source_image, target_tag, os_type) = {
     volumes: [{name: "docker", path: "/var/run/docker.sock"}],
     environment: {
       proget_api_key: {from_secret: "proget_api_key"},
-      TAG: "stable",
+      TAG: "alpha",
       source_image: source_image,
       target_tag: target_tag,
       os_type: os_type
