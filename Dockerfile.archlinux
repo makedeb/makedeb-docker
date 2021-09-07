@@ -35,3 +35,5 @@ RUN pacman -U "./${makedeb_package}/${makedeb_package}"*.pkg.tar.* --noconfirm
 WORKDIR /
 RUN userdel user
 RUN rm -rf /makedeb/
+
+ENTRYPOINT ["/usr/bin/bash"]
