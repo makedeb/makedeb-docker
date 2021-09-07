@@ -65,7 +65,7 @@ for i in "${debian_targets[@]}"; do
   run_verbosely docker build ./ \
                        -f ./Dockerfile.debian.tmp \
                        "${docker_build_arguments[@]}" \
-                       --build-arg "proget_url=${proget_url}" \
+                       --build-arg "proget_url=${proget_server}" \
                        --build-arg "makedeb_package=${makedeb_package}"
 done
 
