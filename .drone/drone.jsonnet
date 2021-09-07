@@ -3,7 +3,6 @@ local buildImage(source_image, target_tag, os_type) = {
   kind: "pipeline",
   type: "docker",
   volumes: [{name: "docker", host: {path: "/var/run/docker.sock"}}],
-  depends_on: ["clone"],
   steps: [{
     name: "build-and-publish",
     image: "docker",
