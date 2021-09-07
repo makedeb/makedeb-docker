@@ -18,5 +18,6 @@ local buildImage(type) = {
 
 [
   buildImage("cron"),
-  buildImage("custom")
+  buildImage("custom"),
+  buildImage("push")
 ]
