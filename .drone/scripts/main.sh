@@ -32,7 +32,7 @@ else
   echo "Invalid os type was passed."
 fi
 
-sed "1s|{{image}}|${source_image}|" "./${target_dockerfile}"
+sed -i "1s|{{image}}|${source_image}|" "./${target_dockerfile}"
 
 # Build and publish image.
 docker build --no-cache \
