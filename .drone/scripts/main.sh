@@ -62,7 +62,7 @@ for i in "${debian_targets[@]}"; do
 
   # Build images.
   echo "[Info] Building image for '${source_image}' with tags ${formatted_target_tags}."
-  echo run_verbosely docker build ./ \
+  run_verbosely docker build ./ \
                        -f ./Dockerfile.debian.tmp \
                        "${docker_build_arguments[@]}" \
                        --build-arg "proget_url=${proget_url}" \
@@ -90,7 +90,7 @@ for i in "${arch_targets[@]}"; do
 
   # Build images.
   echo "[Info] Building image for '${source_image}' with tags ${formatted_target_tags}."
-  echo run_verbosely docker build ./ \
+  run_verbosely docker build ./ \
                        -f ./Dockerfile.archlinux.tmp \
                        "${docker_build_arguments[@]}" \
                        --build-arg "aur_url=${aur_url}" \
@@ -103,4 +103,6 @@ rm Dockerfile.debian.tmp \
    Dockerfile.archlinux.tmp
 
 # Upload all the of the built images.
-run_verbosely docker push -- "${built_image_tags[@]}"
+for i in "${built_image_tags[@]}"; do
+  run_verbosely docker push -- "${i}"
+done
