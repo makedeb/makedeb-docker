@@ -4,5 +4,5 @@ configure_docker() {
   echo "${proget_api_key}" | \
   docker login --username "api" \
                --password-stdin \
-               "https://${proget_url}/"
+               "${proget_server}"
 }
