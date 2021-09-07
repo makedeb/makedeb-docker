@@ -9,7 +9,7 @@ local buildImage(type) = {
     environment: {
       proget_api_key: {from_secret: "proget_api_key"}
     },
-    command: [
+    commands: [
       "apk add --no-cache bash",
       ".drone/scripts/build_and_publish.sh"
     ]
