@@ -25,7 +25,7 @@ esac
 for i in "${package[@]}"; do
   makedeb_package="$(echo "${i}" | awk -F '/' '{print $1}')"
   makepkg_package="$(echo "${i}" | awk -F '/' '{print $2}')"
-  
+
   echo "[Info] Building 'makedeb/${makedeb_package}:${target_tag}' from '${source_image}'..."
 
   if [[ "${os_type}" == "debian" ]]; then
@@ -42,6 +42,7 @@ for i in "${package[@]}"; do
 
   # Build and publish image.
   docker build --no-cache \
+               --pull \
                -t "${published_image_path}" \
                -f "./${target_dockerfile}" \
                --build-arg "proget_url=${proget_server}" \
