@@ -9,31 +9,28 @@ RUN pacman -Syyu --noconfirm base-devel \
                              git \
                              sudo
 
+# Set up default build user.
+RUN useradd -m makedeb
+RUN echo 'makedeb ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER makedeb
+
 # Prepare system for building.
-RUN useradd user
-RUN mkdir -p /makedeb/build_dir/
+RUN sudo mkdir -p /makedeb/build_dir/
+RUN sudo chown makedeb /makedeb/ -R
 WORKDIR /makedeb/build_dir/
 
 RUN git clone "https://${aur_url}/${makepkg_package}.git"
 RUN git clone "https://${aur_url}/${makedeb_package}.git"
 
-RUN chown user "${makedeb_package}/" "${makepkg_package}/" -R
-
-# Build packages.
+# Build and install packages.
 WORKDIR "/makedeb/build_dir/${makepkg_package}/"
-RUN sudo -u user -- makepkg -dm
+RUN makepkg -si --asdeps --noconfirm
 
 WORKDIR "/makedeb/build_dir/${makedeb_package}/"
-RUN sudo -u user -- makepkg -dm
-
-# Install packages
-WORKDIR /makedeb/build_dir/
-RUN pacman -U "./${makepkg_package}/${makepkg_package}"*.pkg.tar.* --asdeps --noconfirm
-RUN pacman -U "./${makedeb_package}/${makedeb_package}"*.pkg.tar.* --noconfirm
+RUN makepkg -si --noconfirm
 
 # Cleanup our work.
 WORKDIR /
-RUN userdel user
-RUN rm -rf /makedeb/
+RUN sudo rm -rf /makedeb/
 
 ENTRYPOINT ["/usr/bin/bash"]
