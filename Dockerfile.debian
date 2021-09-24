@@ -25,4 +25,5 @@ RUN useradd -m makedeb
 RUN echo 'makedeb ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER makedeb
 
-ENTRYPOINT ["/usr/bin/bash"]
+WORKDIR /home/makedeb/
+ENTRYPOINT ["/bin/bash"]

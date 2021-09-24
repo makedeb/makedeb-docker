@@ -33,4 +33,5 @@ RUN makepkg -si --noconfirm
 WORKDIR /
 RUN sudo rm -rf /makedeb/
 
-ENTRYPOINT ["/usr/bin/bash"]
+WORKDIR /home/makedeb/
+ENTRYPOINT ["/bin/bash"]
