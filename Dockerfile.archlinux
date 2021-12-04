@@ -2,7 +2,6 @@ FROM {{image}}
 
 ARG aur_url
 ARG makedeb_package
-ARG makepkg_package
 
 # Upgrade system.
 RUN pacman -Syyu --noconfirm base-devel \
@@ -19,19 +18,16 @@ RUN sudo mkdir -p /makedeb/build_dir/
 RUN sudo chown makedeb /makedeb/ -R
 WORKDIR /makedeb/build_dir/
 
-RUN git clone "https://${aur_url}/${makepkg_package}.git"
 RUN git clone "https://${aur_url}/${makedeb_package}.git"
 
 # Build and install packages.
-WORKDIR "/makedeb/build_dir/${makepkg_package}/"
-RUN makepkg -si --asdeps --noconfirm
-
 WORKDIR "/makedeb/build_dir/${makedeb_package}/"
 RUN makepkg -si --noconfirm
 
 # Cleanup our work.
 WORKDIR /
 RUN sudo rm -rf /makedeb/
+RUN sudo pacman -R git --noconfirm
 
 WORKDIR /home/makedeb/
 ENTRYPOINT ["/bin/bash"]
