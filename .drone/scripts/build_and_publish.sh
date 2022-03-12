@@ -15,7 +15,7 @@ for release in 'makedeb' 'makedeb-beta' 'makedeb-alpha'; do
                  --pull \
                  -t "proget.${hw_url}/${release}:${tag}" \
                  -f ./Dockerfile.tmp \
-                 --build-arg "proget_url=${proget_url}" \
+                 --build-arg "proget_url=proget.${hw_url}" \
                  --build-arg "makedeb_package=${release}" \
                  ./
 
