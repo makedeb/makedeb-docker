@@ -1,20 +1,19 @@
-local buildImage(source_image, target_tag) = {
-  name: "build-image-" + target_tag,
+local buildImage(image, pipeline_name) = {
+  name: "build-image-" + pipeline_name,
   kind: "pipeline",
   type: "docker",
   volumes: [{name: "docker", host: {path: "/var/run/docker.sock"}}],
   steps: [{
-    name: "build-and-publish-" + target_tag,
+    name: "build-and-publish-" + pipeline_name,
     image: "docker",
     volumes: [{name: "docker", path: "/var/run/docker.sock"}],
     environment: {
       proget_api_key: {from_secret: "proget_api_key"},
-      source_image: source_image,
-      target_tag: target_tag
+      image: image
     },
     commands: [
       "apk add --no-cache bash",
-      ".drone/scripts/main.sh"
+      ".drone/scripts/build_and_publish.sh"
     ]
   }]
 };
@@ -26,5 +25,5 @@ local buildImage(source_image, target_tag) = {
   buildImage("ubuntu:latest", "ubuntu-latest"),
   buildImage("ubuntu:rolling", "ubuntu-rolling"),
   buildImage("ubuntu:bionic", "ubuntu-bionic"),
-  buildImage("ubuntu:focal", "ubuntu-focal"),
+  buildImage("ubuntu:focal", "ubuntu-focal")
 ]

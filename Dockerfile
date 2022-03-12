@@ -1,4 +1,4 @@
-FROM {{image}}
+FROM {{ image }}
 
 ARG proget_url
 ARG makedeb_package
