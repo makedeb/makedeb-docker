@@ -20,5 +20,6 @@ for release in 'makedeb' 'makedeb-beta' 'makedeb-alpha'; do
                  ./
 
     docker push "proget.${hw_url}/${release}:${tag}"
+done
 
 # vim: set sw=4 expandtab:
