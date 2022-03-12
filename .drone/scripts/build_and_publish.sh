@@ -13,13 +13,13 @@ for release in 'makedeb' 'makedeb-beta' 'makedeb-alpha'; do
 
     docker build --no-cache \
                  --pull \
-                 -t "proget.${hw_url}/${release}:${tag}" \
+                 -t "proget.${hw_url}/docker/makedeb/${release}:${tag}" \
                  -f ./Dockerfile.tmp \
                  --build-arg "proget_url=proget.${hw_url}" \
                  --build-arg "makedeb_package=${release}" \
                  ./
 
-    docker push "proget.${hw_url}/${release}:${tag}"
+    docker push "proget.${hw_url}/docker/makedeb/${release}:${tag}"
 done
 
 # vim: set sw=4 expandtab:
