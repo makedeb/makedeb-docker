@@ -2,6 +2,7 @@ local buildImage(image, pipeline_name) = {
   name: "build-image-" + pipeline_name,
   kind: "pipeline",
   type: "docker",
+  trigger: {branch: ["master"]},
   volumes: [{name: "docker", host: {path: "/var/run/docker.sock"}}],
   steps: [{
     name: "build-and-publish-" + pipeline_name,
