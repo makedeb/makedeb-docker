@@ -26,4 +26,4 @@ RUN echo 'makedeb ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER makedeb
 
 WORKDIR /home/makedeb/
-ENTRYPOINT ["/bin/bash"]
+CMD ["/bin/bash"]
