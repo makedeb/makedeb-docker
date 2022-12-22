@@ -27,7 +27,6 @@ local buildImage(image, pipeline_name) = {
   buildImage("ubuntu:rolling", "ubuntu-rolling"),
   buildImage("ubuntu:bionic", "ubuntu-bionic"),
   buildImage("ubuntu:focal", "ubuntu-focal"),
-  buildImage("ubuntu:impish", "ubuntu-impish"),
   buildImage("ubuntu:jammy", "ubuntu-jammy"),
   buildImage("ubuntu:kinetic", "ubuntu-kinetic"),
 ]
