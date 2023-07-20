@@ -17,6 +17,7 @@ jobs:
           - "debian:latest"
           - "debian:buster"
           - "debian:bullseye"
+          - "debian:bookworm"
           - "ubuntu:latest"
           - "ubuntu:rolling"
           - "ubuntu:bionic"
