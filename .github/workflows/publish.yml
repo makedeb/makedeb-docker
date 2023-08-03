@@ -41,7 +41,7 @@ jobs:
         with:
           registry: ghcr.io
           username: kavplex
-          password: ${{ secrets.GH_TOKEN }}
+          password: ${{ secrets.GH_TOKEN_CUSTOM }}
       - name: Set up image
         run: sed -i 's|{{ image }}|${{ matrix.distro }}|g' Dockerfile
       - name: Get target tag
