@@ -26,6 +26,7 @@ jobs:
           - "ubuntu:focal"
           - "ubuntu:jammy"
           - "ubuntu:lunar"
+          - "ubuntu:mantic"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
