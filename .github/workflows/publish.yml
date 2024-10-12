@@ -28,6 +28,7 @@ jobs:
           - "ubuntu:lunar"
           - "ubuntu:mantic"
           - "ubuntu:noble"
+          - "ubuntu:oracular"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
