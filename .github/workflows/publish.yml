@@ -18,6 +18,7 @@ jobs:
         distro:
           - "debian:latest"
           - "debian:bookworm"
+          - "debian:trixie"
           - "ubuntu:latest"
           - "ubuntu:rolling"
           - "ubuntu:focal"
